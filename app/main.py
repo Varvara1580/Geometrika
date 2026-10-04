@@ -39,7 +39,7 @@ BASE_DIR = Path(__file__).resolve().parent
 templates = Jinja2Templates(directory= BASE_DIR / "templates")
 app = FastAPI()
 
-app.mount("/static", StaticFiles(directory=BASE_DIR / "static"), name="static")
+
 
 Base.metadata.create_all(bind = engine)
 
@@ -54,7 +54,7 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl = 'login')
 
 UPLOAD_DIR = 'uploads'
 os.makedirs(UPLOAD_DIR, exist_ok = True)
-app.mount('/uploads', StaticFiles(directory = BASE_DIR / 'uploads'), name = 'uploads')
+
 
 def hash_password(password: str):
     return pwd_context.hash(password)
@@ -1093,3 +1093,8 @@ def all(request: Request, db: Session = Depends(get_db)):
                                       context = {'all_users': all_users, 'users': len(users),
                                                  'admins': len(admins), 'members': members,
                                                  'active_teachers': active_teachers})
+
+
+
+app.mount("/", StaticFiles(directory=BASE_DIR / "static"), name="static")
+app.mount('/', StaticFiles(directory = BASE_DIR / 'uploads'), name = 'uploads')
