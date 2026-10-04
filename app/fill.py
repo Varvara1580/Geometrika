@@ -3,15 +3,17 @@ from app.Models import Topic, Task
 import json
 from sqlalchemy import select
 from sqlalchemy.orm import DeclarativeBase, Session, mapped_column
+from pathlib import Path
 
+CURRENT_DIR = Path(__file__).resolve().parent
 
 def read_txt():
-    with open('topic_name.txt', 'r', encoding ='utf-8') as f:
+    with open(CURRENT_DIR / 'topic_name.txt', 'r', encoding ='utf-8') as f:
         a = [i.strip() for i in f]
     return a
 
 def read_task():
-    with open('otv.json', 'r', encoding ='utf-8') as f:
+    with open(CURRENT_DIR / 'otv.json', 'r', encoding ='utf-8') as f:
         b = json.load(f)
     return b
 
