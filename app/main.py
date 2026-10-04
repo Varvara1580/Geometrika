@@ -1097,4 +1097,4 @@ def all(request: Request, db: Session = Depends(get_db)):
 
 
 app.mount("/", StaticFiles(directory=BASE_DIR / "static"), name="static")
-app.mount('/', StaticFiles(directory = BASE_DIR / 'uploads'), name = 'uploads')
+app.mount('/uploads', StaticFiles(directory = BASE_DIR / 'uploads'), name = 'uploads')
