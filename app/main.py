@@ -52,7 +52,7 @@ ACCESS_TOKEN = 60
 pwd_context = CryptContext(schemes=['bcrypt'], deprecated = 'auto')
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl = 'login')
 
-UPLOAD_DIR = 'uploads'
+UPLOAD_DIR = BASE_DIR / 'uploads'
 os.makedirs(UPLOAD_DIR, exist_ok = True)
 
 
