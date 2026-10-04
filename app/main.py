@@ -52,7 +52,7 @@ ACCESS_TOKEN = 60
 pwd_context = CryptContext(schemes=['bcrypt'], deprecated = 'auto')
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl = 'login')
 
-UPLOAD_DIR = 'uploads'
+UPLOAD_DIR = BASE_DIR / 'uploads'
 os.makedirs(UPLOAD_DIR, exist_ok = True)
 
 
@@ -911,8 +911,8 @@ def add_own_task(request: Request, geometry_class_id: int, own_topic_id: int = F
     with open(BASE_DIR / solution_path, 'wb') as buffer:
         shutil.copyfileobj(solution.file, buffer)
 
-    own_task = Own_task(name=name, number=kolvo + 1, text=text, otv=otv, draft = draft_path,
-                        solution = solution_path, creator_id=user.id, own_topic_id=own_topic_id)
+    own_task = Own_task(name=name, number=kolvo + 1, text=text, otv=otv, draft = f'uploads/{unique_draft_filename}',
+                        solution = f'uploads/{unique_solution_filename}', creator_id=user.id, own_topic_id=own_topic_id)
     db.add(own_task)
     db.commit()
     db.refresh(own_task)
