@@ -34,7 +34,7 @@ from matplotlib.figure import Figure
 templates = Jinja2Templates(directory="app/templates")
 app = FastAPI()
 
-app.mount("/static", StaticFiles(directory="app/static"), name="static")
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 Base.metadata.create_all(bind = engine)
 
@@ -49,7 +49,7 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl = 'login')
 
 UPLOAD_DIR = 'uploads'
 os.makedirs(UPLOAD_DIR, exist_ok = True)
-app.mount('/uploads', StaticFiles(directory = 'app/uploads'), name = 'uploads')
+app.mount('/uploads', StaticFiles(directory = 'uploads'), name = 'uploads')
 
 def hash_password(password: str):
     return pwd_context.hash(password)
