@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/icon2.png" type="image/png">
+    <title>Геометрия</title>
+    <style>
+        body
+        {
+        text-align: center;
+        color: #fcfcfc;
+        background-image: url('/img/green4.png');
+        background-size: cover;
+        }
+
+        .klyaksa
+        {
+        display: flex;
+        justify-content: center;
+        }
+
+        a
+        {
+        color: #fcfcfc;
+        }
+    </style>
+</head>
+<body>
+    <div class = 'result'>
+        <h1>Ваш результат: {{ progress }} / {{ kolvo }}</h1>
+    </div>
+
+    <div class = 'klyaksa'>
+        {% if progress >= 0.75 * kolvo %}
+            <img src = '\static\img\happy_klyaksa3.png'>
+        {% endif %}
+
+        {% if progress < 0.75 * kolvo %}
+            <img src = '\static\img\sad_klyaksa3.png'>
+        {% endif %}
+    </div>
+
+    <div class = 'link'>
+        <a href = '/'>На главную</a>
+        <br>
+        <a href = '/user'>Личный кабинет</a>
+        <br>
+        <a href = '/logout'>Выйти</a>
+    </div>
+
+</body>
+</html>

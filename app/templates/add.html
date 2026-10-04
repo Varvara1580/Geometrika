@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/icon2.png" type="image/png">
+    <title>Геометрия</title>
+    <style>
+        body
+        {
+            background-image: url('/img/green4.png');
+            background-size: cover;
+            color: #fcfcfc;
+            text-align: center;
+        }
+
+        .new_topic
+        {
+            border: 2px double;
+            padding-bottom: 10px;
+            margin-bottom: 0;
+        }
+
+        .new_task
+        {
+            margin-top: 0;
+            border: 2px double;
+            padding-bottom: 10px;
+        }
+
+        .task_name
+        {
+            width: 90%;
+        }
+
+        .task_text
+        {
+            width: 90%;
+        }
+
+        a
+        {
+            color: #fcfcfc;
+        }
+
+        table
+        {
+            width: 1000px;
+        }
+
+        .draft
+        {
+            width: 200px;
+            height: 200px;
+        }
+
+        .solution
+        {
+            width: 200px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Добавление новой темы и задачи</h1>
+    <form method = 'POST' action = '/add_own_topic/{{ geometry_class_id }}' class = 'new_topic'>
+        <h1>Добавить новую тему</h1>
+        <label>Название темы</label>
+        <input type = 'text' name = 'name'>
+        <button type = 'submit'>Создать тему</button>
+    </form><br>
+    <form method = 'POST' action = '/add_own_task/{{ geometry_class_id }}'  enctype = 'multipart/form-data' class = 'new_task'>
+        <h1>Добавить новую задачу</h1>
+        <label>Задача для темы</label>
+        <select name = 'own_topic_id'>
+            {% for i in all_topics %}
+                <option value = '{{ i.id }}'>{{ i.id }} - {{ i.name }}</option>
+            {% endfor %}
+        </select>
+        <br><br>
+        <label>Название задачи</label><br><br>
+        <input type = 'text' name = 'name' class = 'task_name'><br><br>
+        <label>Чертеж к задаче</label><br><br>
+        <input type = 'file' name = 'draft' accept = 'image/*'><br><br>
+        <label>Текст задачи</label><br><br>
+        <input type = 'textarea' name = 'text' class = 'task_text'><br><br>
+        <label>Правильный ответ</label><br><br>
+        <input type = 'text' name = 'otv'><br><br>
+        <label>Решение к задаче</label><br><br>
+        <input type = 'file' name = 'solution' accept = 'image/*'><br><br>
+        <button type = 'submit'>Добавить задачу</button>
+    </form>
+    {% if message %}
+        <p>{{ message }}</p>
+    {% endif %}
+    <h1>Вы добавили темы:</h1>
+    {% for i in all_topics %}
+        <h1>Тема {{ i.name }}</h1>
+        <table border>
+            <tr>
+                <th>Задача</th>
+                <th>Чертеж</th>
+                <th>Текст задачи</th>
+                <th>Правильный ответ</th>
+                <th>Решение</th>
+            </tr>
+            {% for j in i.own_tasks %}
+                <tr>
+                    <td>{{ j.number }} - {{ j.name }}</td>
+                    <td><img src = '/{{ j.draft }}' class = 'draft'></td>
+                    <td>{{ j.text }}</td>
+                    <td>{{ j.otv }}</td>
+                    <td><img src = '/{{ j.solution }}' class = 'solution'></td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endfor %}
+    <div class = 'link'>
+        <a href = '/'>На главную</a><br>
+        <a href = '/settings'>Назад</a><br>
+        <a href = '/logout'>Выйти</a>
+    </div>
+</body>
+</html>

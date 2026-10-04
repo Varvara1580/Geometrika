@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/icon2.png" type="image/png">
+    <title>Геометрия</title>
+    <style>
+        body
+        {
+            display: flex;
+            justify-content: center;
+            background-image: url('/img/green4.png');
+            background-size: cover;
+        }
+        img
+        {
+            max-width: 500px;
+            max-height: 500px;
+        }
+
+        a
+        {
+            color: #fcfcfc;
+        }
+    </style>
+</head>
+<body>
+    <img src = '\static\img\theory\{{ topic_id }}.png'><br><br>
+    <div class = 'link'>
+        {% if task_id != 0 %}
+            <a href = '/task/{{ topic_id }}/{{ task_id }}'>Назад</a>
+            <br>
+        {% endif %}
+        <a href = '/'>На главную</a>
+        <br>
+        <a href = '/user'>Личный кабинет</a>
+        <br>
+        <a href = '/logout'>Выйти</a>
+    </div>
+</body>
+</html>

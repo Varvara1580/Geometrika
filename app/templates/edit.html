@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/icon2.png" type="image/png">
+    <title>Геометрия</title>
+    <style>
+        body
+        {
+        background-image: url('/img/green4.png');
+        background-size: cover;
+        color: #fcfcfc;
+        text-align: center;
+        }
+
+        a
+        {
+        color: #fcfcfc;
+        }
+
+        button
+        {
+        background-color: #02fa30;
+        }
+    </style>
+</head>
+<body>
+    <h1>Редактировать информацию</h1>
+    {% if message %}
+        <h2>{{ message }}</h2>
+    {% endif %}
+    <form method = 'POST', action = '/edit'>
+        <input name = 'name' placeholder = 'Имя'><br><br>
+        <input name = 'surname' placeholder = 'Фамилия'><br><br>
+        <input name = 'username' placeholder = 'Логин'><br><br>
+        <input name = 'password' placeholder = 'Пароль'><br><br>
+        <button type = 'submit'>Обновить профиль</button>
+
+    </form>
+    <a href = '/user'>Назад</a>
+</body>
+</html>

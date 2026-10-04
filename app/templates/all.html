@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/icon2.png" type="image/png">
+    <title>Геометрия</title>
+    <style>
+        body
+        {
+        background-image: url('/img/green4.png');
+        background-size: cover;
+        color: #fcfcfc;
+        text-align: center;
+        }
+
+        a
+        {
+        color: #fcfcfc;
+        }
+
+        .active
+        {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .active_students, .active_teachers
+        {
+            display: flex;
+            flex-direction: column;
+            width: 50%;
+        }
+
+        .active_students
+        {
+            margin-right: 50px;
+        }
+
+        table
+        {
+            background-color: rgba(16, 79, 22, 0.8);
+            color: #fcfcfc;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Статистика сайта</h1>
+    <h2>Зарегистрировано пользователей: {{ all_users }}</h2>
+    <h3>Из них:</h3>
+    <h3>Ученики: {{ users }}</h3>
+    <h3>Учителя: {{ admins }}</h3>
+
+    <div class = 'active'>
+        <div class = 'active_students'>
+            <h2>Самые активные ученики</h2>
+            <table border>
+                <tr>
+                    <th>Ученик</th>
+                    <th>Класс</th>
+                    <th>Решено задач</th>
+                </tr>
+                {% for i in members %}
+                    <tr>
+                        <td>{{ i[0] }} {{ i[1] }}</td>
+                        <td>{{ i[2] }}</td>
+                        <td>{{ i[3] }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+
+        <div class = 'active_teachers'>
+            <h2>Самые активные учителя</h2>
+            <table border>
+                <tr>
+                    <th>Учитель</th>
+                    <th>Добавлено задач</th>
+                    <th>Класс</th>
+                </tr>
+                {% for i in active_teachers %}
+                    <tr>
+                        <td>{{ i[0] }} {{ i[1] }}</td>
+                        <td>{{ i[2] }}</td>
+                        <td>{{ i[3] }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+
+    <div class = 'link'>
+        <a href = '/'>На главную</a>
+        <br>
+        <a href = '/user'>Личный кабинет</a>
+        <br>
+        <a href = '/logout'>Выйти</a>
+    </div>
+</body>
+</html>

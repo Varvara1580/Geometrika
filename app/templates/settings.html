@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/icon2.png" type="image/png">
+    <title>Геометрия</title>
+    <style>
+        body
+        {
+        background-image: url('/img/green4.png');
+        background-size: cover;
+        color: #fcfcfc;
+        text-align: center;
+        }
+
+
+        .schedule
+        {
+            border: 2px double;
+            padding-bottom: 20px;
+            background-color: rgba(16, 79, 22, 0.8);
+            width: 100%;
+        }
+
+        .new_class
+        {
+            border: 2px double;
+            padding-bottom: 20px;
+            background-color: rgba(16, 79, 22, 0.8);
+            width: 100%;
+        }
+
+        .geometry_class
+        {
+            border: 2px double;
+            margin: 10px 10px 10px 0;
+            padding: 10px;
+            width: 1125px;
+        }
+
+        table
+        {
+            margin: 0 auto;
+            width: 100%;
+            background-color: rgba(16, 79, 22, 0.8);
+        }
+
+        button
+        {
+        background-color: #02fa30;
+        }
+
+        a
+        {
+        color: #fcfcfc;
+        }
+    </style>
+</head>
+<body>
+    <h1>Страница настроек</h1>
+    <div class = 'schedule'>
+        <h3 class = 'info_schedule'>Режим: {{ user.schedule }}</h3>
+        <form method = 'POST' action = '/settings' class = 'change'>
+            <button type = 'submit'>Поменять режим</button>
+        </form>
+    </div>
+    {% if message %}
+        <p>{{ message }}</p>
+    {% endif %}
+    <br>
+    <form method = 'POST' action = '/class' class = 'new_class'>
+        <h1>{% if user.role == 'user' %}Присоединиться к классу{% else %}Создать новый класс{% endif %}</h1>
+        <input type = 'text' name = 'name' placeholder = 'Название класса'>
+        <input type = 'text' name = 'password' placeholder = 'Пароль для присоединения к классу'>
+        {% if user.role == 'admin' %}
+            <button type = 'submit' name = 'button' value = 'create'>Создать класс</button>
+        {% else %}
+            <button type = 'submit' name = 'button' value = 'join'>Присоединиться к классу</button>
+        {% endif %}
+    </form>
+    <br>
+    <h1>У Вас присоединены классы:</h1>
+    {% for i in all_classes %}
+        <div class = 'geometry_class'>
+            <h1>Класс: {{ i.name }}</h1>
+            <h2>Пароль для входа: {{ i.password }}</h2>
+            <h3>Создатель: {{ i.creator.username}}</h3>
+            {% if i.members %}
+                <h3>Участники:</h3>
+                <table border>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Фамилия</th>
+                        <th>Логин</th>
+                    </tr>
+                    {% for j in i.members %}
+                        <tr>
+                            <td>{{ j.name }}</td>
+                            <td>{{ j.surname }}</td>
+                            <td>{{ j.username }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% else %}
+                <h3>Нет участников</h3>
+            {% endif %}
+            <br>
+            <h3>Вы добавили следующие темы:</h3>
+            <table border>
+                <tr>
+                    <th>Тема</th>
+                    <th>Комментарий</th>
+                </tr>
+                {% for j in i.own_topics %}
+                    <tr>
+                        <td><a href = '/own_task/{{ j.id }}/1'>{{ j.name }}</a></td>
+                        <td>Здесь будет комментарий</td>
+                    </tr>
+                {% endfor %}
+            </table>
+            {% if i.creator_id == user.id %}
+                <a href = '/add_own_topic/{{ i.id }}'>Добавить тему</a>
+            {% endif %}
+        </div>
+    {% endfor %}
+    <div class = 'link'>
+        <a href = '/'>На главную</a>
+        <br>
+        <a href = '/user'>Личный кабинет</a>
+        <br>
+        <a href = '/logout'>Выйти</a>
+    </div>
+</body>
+</html>

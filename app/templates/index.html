@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/icon2.png" type="image/png">
+    <title>Геометрия</title>
+    <style>
+        body
+        {
+            margin: 600;
+            padding: 600;
+            display: flex;
+            width: 100%;
+            flex-direction: column;
+            background-image: url('/img/green4.png');
+            background-size: cover;
+            color: #fcfcfc;
+        }
+
+        .all
+        {
+            display: flex;
+            width: 100%;
+        }
+
+        .title
+        {
+            background-color: rgba(16, 79, 22, 0.8);
+            color: #fcfcfc;
+            margin: 0 0 10px 0;
+            padding: 0;
+        }
+
+        table
+        {
+            background-color: rgba(16, 79, 22, 0.8);
+            color: #fcfcfc;
+            width: 840px;
+        }
+
+        .own
+        {
+            width: 840px;
+        }
+
+        .menu
+        {
+            background-color: rgba(16, 79, 22, 0.8);
+            color: #fcfcfc;
+            width: 20%;
+        }
+
+        .content
+        {
+            width: 80%;
+        }
+        .menu a + a
+        {
+            margin-left: 10px;
+        }
+
+        a
+        {
+            color: #fcfcfc;
+        }
+
+        .link
+        {
+            margin: 0 auto;
+        }
+
+        .neprav_triangle
+        {
+            max-width: 215px;
+            max-height: 215px;
+            opacity: 100%;
+        }
+
+        .balayan
+        {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class = 'title'>
+        <h1>Здравствуйте, {{ user.username }}! Приветствуем Вас на сайте для решения задач по геометрии.</h1>
+    </div>
+    <div class = 'all'>
+        <div class = 'content'>
+            <h2 class = 'balayan'>Учебник Э.Н.Балаян "Геометрия. Задачи на готовых чертежах. 8 класс"</h2>
+            <table border>
+                <tr>
+                    <th>Тема</th>
+                    <th>Количество заданий</th>
+                    <th>Сложность</th>
+                    <th>Теория</th>
+                </tr>
+                {% for i in range(25) %}
+                    <tr>
+                        <td><a href = '/task/{{ topics[i].id }}/1'>{{ topics[i].id }} - {{ topics[i].name }}</a></td>
+                        <td>{{ kolvo[i] }}</td>
+                        <td>{{ difficulty[i] }}</td>
+                        <td><a href = '/theory/{{ topics[i].id }}/0'>теория</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+            {% for i in all_classes %}
+                <h2>Темы класса {{ i.name }}</h2>
+                {% if not i.own_topics %}
+                    <h3>Нет тем</h3>
+                {% else %}
+                    <table border class = 'own'>
+                        <tr>
+                            <th>Тема</th>
+                            <th>Количество задач</th>
+                        </tr>
+                        {% for j in i.own_topics %}
+                            <tr>
+                                <td><a href = '/own_task/{{ j.id }}/1'>{{ j.name }}</a></td>
+                                <td>{{ j.own_tasks|length }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class = 'menu'>
+            <table border>
+                <tr>
+                    <td>Настройки</td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>Режим: {{ user.schedule }}</p>
+                        <p>Классы:
+                            {% if not class_names %}-
+                            {% else %}
+                                {{ class_names }}
+                            {% endif %}</p>
+                        <a href = '/settings'>Изменить настройки</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Информация о пользователе</td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>Name: {{ user.name }}</p>
+                        <p>Surname: {{ user.surname }}</p>
+                        <p>Username: {{ user.username }}</p>
+                        <p>Роль: {{ user.role }}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href = '/all'>Все о сайте</a><br>
+                        <a href = '/user'>Личный кабинет</a><br>
+                        <a href = '/logout'>Выйти</a>
+                    </td>
+                </tr>
+            </table>
+            <img class = 'neprav_triangle' src = '\static\img\neprav_triangle.png'>
+        </div>
+    </div>
+</body>
+</html>

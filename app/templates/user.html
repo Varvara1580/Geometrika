@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/icon2.png" type="image/png">
+    <title>Геометрия</title>
+    <style>
+        body
+        {
+            background-image: url('/img/green4.png');
+            background-size: cover;
+            color: #fcfcfc;
+            text-align: center;
+        }
+
+        .set_user
+        {
+            display: flex;
+            width: 100%;
+        }
+
+        .neprav_triangle
+        {
+            max-width: 215px;
+            max-height: 215px;
+            width: 30%;
+        }
+        .info
+        {
+            width: 55%;
+        }
+
+        .info_1
+        {
+            display: flex;
+            justify-content: center;
+        }
+
+        .link
+        {
+            width: 15%;
+        }
+
+        table
+        {
+            background-color: rgba(16, 79, 22, 0.8);
+            color: #fcfcfc;
+        }
+
+
+        .bar
+        {
+            opacity: 80%;
+            border: 2px double;
+        }
+
+
+        .course
+        {
+            display: flex;
+            text-align: left;
+        }
+
+        .stat
+        {
+            width: 70%;
+        }
+
+        .pie
+        {
+            width: 30%;
+            opacity: 80%;
+        }
+
+        a
+        {
+            color: #fcfcfc;
+        }
+
+        .h_1
+        {
+            background-color: rgba(16, 79, 22, 0.8);
+            color: #fcfcfc;
+            font-size: 44px;
+            border: 2px double;
+        }
+
+        .pie_1
+        {
+            max-width: 350px;
+            max-height: 350px;
+            border: 2px double;
+        }
+
+    </style>
+</head>
+<body>
+    <div class = 'set_user'>
+        <img class = 'neprav_triangle' src = '\static\img\neprav_triangle.png'>
+        <div class = 'info'>
+            <h1>Профиль пользователя</h1>
+            <h3>Имя: {{ name }}</h3>
+            <h3>Фамилия: {{ surname }}</h3>
+            <h3>Логин: {{ username }}</h3>
+            {% if role == 'user' %}
+                <h3>Роль: пользователь</h3>
+            {% else %}
+                <h3>Роль: учитель</h3>
+            {% endif %}
+            <!-- <table class = 'info_1' border>
+                <tr>
+                    <th>Имя</th>
+                    <td>{{ name }}</td>
+                </tr>
+                <tr>
+                    <th>Фамилия</th>
+                    <td>{{ surname }}</td>
+                </tr>
+                <tr>
+                    <th>Логин</th>
+                    <td>{{ username }}</td>
+                </tr>
+            </table> -->
+            <a href = '/edit'>Редактировать информацию</a><br><br>
+            <h1>Статистика решенных задач</h1>
+        </div>
+
+        <div class = 'link'>
+            <a href = '/'>На главную</a>
+            <br>
+            <a href = '/logout'>Выйти</a>
+        </div>
+    </div>
+
+    <div class = 'bar'>
+        <!--<img src = '\static\img\graph\bar\{{ id }}.png'>-->
+        <img src = '/bar.png'>
+    </div>
+
+
+    <div class = 'course'>
+        <div class = 'stat'>
+            <table border>
+                <tr>
+                    <th>Тема</th>
+                    <th>Решено задач</th>
+                    <th>Всего задач</th>
+                    <th>Статус</th>
+                </tr>
+                {% for i in topic_stats %}
+                    <tr>
+                        <td>{{ i.name }}</td>
+                        <td>{{ i.correct }}</td>
+                        <td>{{ i.total }}</td>
+                        <td>{{ i.status }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class = 'pie'>
+            <h1 class = 'h_1'>Всего решено задач: {{ correct_all }} из {{ all }}</h1>
+            <!--<img class = 'pie_1' src = '\static\img\graph\pie\{{ id }}.png'>-->
+            <img class = 'pie_1' src = '/{{ stat_topics }}/pie.png'>
+            <form method = 'GET' action = '/user'>
+                <select name = 'stat_topics'>
+                    <option value = 'all'>Все темы</option>
+                    {% for i in topics %}
+                        <option value = '{{ i.id }}'>{{ i.id }} - {{ i.name }}</option>
+                    {% endfor %}
+                </select>
+                <button type = 'submit'>Выбрать</button>
+            </form>
+        </div>
+    </div>
+    <div class = 'own'>
+            {% for i in own_topic_stats %}
+                <h2>Темы класса {{ i.name }}</h2>
+                {% if not i.own_topics %}
+                    <p>Нет тем</p>
+                {% else %}
+                    <table border>
+                        <tr>
+                            <th>Тема</th>
+                            <th>Решено задач</th>
+                            <th>Всего задач</th>
+                            <th>Статус</th>
+                        </tr>
+                        {% for j in own_topic_stats[i] %}
+                            <tr>
+                                <td>{{ j.name }}</td>
+                                <td>{{ j.correct }}</td>
+                                <td>{{ j.total }}</td>
+                                <td>{{ j.status }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                {% endif %}
+            {% endfor %}
+        </div>
+</body>
+</html>

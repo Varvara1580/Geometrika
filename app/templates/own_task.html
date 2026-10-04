@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/icon2.png" type="image/png">
+    <title>Геометрия</title>
+    <style>
+        body
+        {
+        background-image: url('/img/green4.png');
+        background-size: cover;
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 20px;
+        color: #fcfcfc;
+        }
+
+
+        .main
+        {
+        border-radius: 8px;
+        padding: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        overflow: hidden;
+        }
+
+        .title
+        {
+        height: 75%;
+        width: 1000px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 5px;
+        border: 2px solid;
+        border-color: #02fa30;
+        background-color: rgba(4, 135, 28, 0.5);
+        }
+
+        .content
+        {
+        gap: 30px;
+        width: 1000px;
+        }
+
+        .text
+        {
+
+        width: 1000px;
+        border: 2px solid;
+        border-color: #02fa30;
+        text-align: center;
+        object-fit: contain;
+        margin: 40px 0 40px 0;
+        background-color: rgba(4, 135, 28, 0.7);
+        }
+
+        .info_write
+        {
+        width: 1000px;
+        text-align: center;
+        }
+
+        .otvet
+        {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        font-size: 20px;
+        }
+
+        .option
+        {
+        margin: 10px 0;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        }
+
+        button
+        {
+        background-color: #02fa30;
+        }
+
+
+        .button_check
+        {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 5px;
+        }
+
+
+        .button_show
+        {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        }
+
+
+        .button_save
+        {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+
+        .buttons1
+        {
+            display: flex;
+            justify-content: center;
+        }
+
+        .button_next
+        {
+            display: flex;
+            justify-content: center;
+            width: 50%;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .button_pred
+        {
+            display: flex;
+            justify-content: center;
+            width: 50%;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .solution
+        {
+            text-align: center;
+            border: 2px solid;
+            border-color: #02fa30;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgba(4, 135, 28, 0.7);
+            display: none;
+            overflow: hidden;
+        }
+
+        .result
+        {
+        text-align: center;
+        color: {{ color }};
+        }
+
+        .message
+        {
+            text-align: center;
+            color: #02fa30;
+        }
+
+        .link
+        {
+            text-align: center;
+        }
+
+        a
+        {
+            display: inline-block;
+            color: #fcfcfc;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class = 'title'>
+        <h1>Задача {{ task.number }}</h1>
+    </div>
+    <div class = 'main'>
+        <div class = 'content'>
+            <div class = 'draft'>
+                <img src = '/{{ task.draft }}'>
+            </div>
+
+            <div class = 'text'>
+                <p>{{ task.text }}</p>
+            </div>
+
+            <div class = 'info_write'>
+                <form method = 'POST' action = '/own_task/{{ topic_id }}/{{ task_id }}'>
+                    <div class = 'otvet'>
+                        <label>Введите ответ</label>
+                        <input type = 'text' name = 'otv'>
+                    </div>
+                    <div class = 'buttons'>
+                        {% if schedule == 'Обучение' %}
+                            <button type = 'submit' name = 'button' value = 'check'>Проверить</button>
+                            <button type = 'button' onclick = 'Solution()' id = 'solution_button'>Показать решение</button>
+                        {% else %}
+                            <button type = 'submit' name = 'button' value = 'save'>Сохранить ответ</button>
+                        {% endif %}
+                        {% if task_id != 1 %}
+                            <button type = 'submit' name = 'button' value = 'pred'><<</button>
+                        {% endif %}
+                        <button type = 'submit' name = 'button' value = 'next'>
+                            {% if task_id == kolvo %}Закончить
+                            {% else %}>>
+                            {% endif %}
+                        </button>
+                    </div>
+                </form>
+                {% if result %}
+                    <div class = 'result'>
+                        <h1>{{ result }}</h1>
+                    </div>
+                {% endif %}
+                {% if message %}
+                    <div class = 'message'>
+                        <h1>{{ message }}</h1>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class = 'solution' id = 'solution'>
+            <h1>Решение</h1>
+            <img class = 'img2' src = '/{{ task.solution }}'>
+        </div>
+    </div>
+    <div class = 'link'>
+        <a href = '/'>На главную</a>
+        <br>
+        <a href = '/user'>Личный кабинет</a>
+        <br>
+        <a href = '/logout'>Выйти</a>
+    </div>
+
+    <script>
+    function Solution() {
+            const solution = document.getElementById('solution');
+            const button = document.getElementById('solution_button');
+
+            const el = solution.style.display;
+
+            if (el == 'none') {
+                button.textContent = 'Скрыть решение';
+                solution.style.display = 'block';
+            } else {
+                button.textContent = 'Показать решение';
+                solution.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
