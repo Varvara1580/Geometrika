@@ -106,10 +106,10 @@
             {% for j in i.own_tasks %}
                 <tr>
                     <td>{{ j.number }} - {{ j.name }}</td>
-                    <td><img src = '/{{ j.draft }}' class = 'draft'></td>
+                    <td><img src = '{{ j.draft }}' class = 'draft'></td>
                     <td>{{ j.text }}</td>
                     <td>{{ j.otv }}</td>
-                    <td><img src = '/{{ j.solution }}' class = 'solution'></td>
+                    <td><img src = '{{ j.solution }}' class = 'solution'></td>
                 </tr>
             {% endfor %}
         </table>
