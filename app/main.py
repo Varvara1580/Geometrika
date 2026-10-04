@@ -30,11 +30,16 @@ matplotlib.use('Agg')
 import io
 from matplotlib.figure import Figure
 
+
+
+from pathlib import Path
+BASE_DIR = Path(__file__).resolve().parent
+
 # Указываем папку, где лежат HTML-шаблоны
-templates = Jinja2Templates(directory="app/templates")
+templates = Jinja2Templates(directory= BASE_DIR / "templates")
 app = FastAPI()
 
-app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/static", StaticFiles(directory=BASE_DIR / "static"), name="static")
 
 Base.metadata.create_all(bind = engine)
 
@@ -49,7 +54,7 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl = 'login')
 
 UPLOAD_DIR = 'uploads'
 os.makedirs(UPLOAD_DIR, exist_ok = True)
-app.mount('/uploads', StaticFiles(directory = 'uploads'), name = 'uploads')
+app.mount('/uploads', StaticFiles(directory = BASE_DIR / 'uploads'), name = 'uploads')
 
 def hash_password(password: str):
     return pwd_context.hash(password)
