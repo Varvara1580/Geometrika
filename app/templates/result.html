@@ -13,12 +13,20 @@
         background-size: cover;
         }
 
-        .klyaksa
+        .neprav_triangle
         {
-        display: flex;
-        justify-content: center;
+            display: flex;
+            justify-content: center;
         }
 
+        .img_neprav_triangle
+        {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-width: 400px;
+            max-height: 400px;
+        }
         a
         {
         color: #fcfcfc;
@@ -30,13 +38,13 @@
         <h1>Ваш результат: {{ progress }} / {{ kolvo }}</h1>
     </div>
 
-    <div class = 'klyaksa'>
+    <div class = 'neprav_triangle'>
         {% if progress >= 0.75 * kolvo %}
-            <img src = '/img/happy_klyaksa3.png'>
+            <img class = 'img_neprav_triangle' src = '/img/neprav_triangle.png'>
         {% endif %}
 
         {% if progress < 0.75 * kolvo %}
-            <img src = '/img/sad_klyaksa3.png'>
+            <img class = 'img_neprav_triangle' src = '/img/neprav_triangle_sad.png'>
         {% endif %}
     </div>
 

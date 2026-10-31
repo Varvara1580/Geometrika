@@ -13,6 +13,28 @@
         text-align: center;
         }
 
+
+        .login-triangle
+        {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .login
+        {
+            align-items: center;
+            margin-left: 15%;
+            width: 85%;
+        }
+
+        .neprav_triangle
+        {
+            width: 15%;
+            max-width: 215px;
+            max-height: 215px;
+        }
+
         a
         {
         color: #fcfcfc;
@@ -22,20 +44,44 @@
         {
         background-color: #02fa30;
         }
+
+        .reklama
+        {
+            max-height: 500px;
+            max-width: 1150px;
+        }
+
+        .email
+        {
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
-    <h1>Войти</h1>
-    {% if message %}
-        <div class = 'error'>
-            {{ message }}
+    <div class = 'login-triangle'>
+        <div class = 'login'>
+            <h1>Войти</h1>
+            {% if message %}
+                <div class = 'error'>
+                    {{ message }}
+                </div>
+            {% endif %}
+            <form method = 'POST' action = '/login'>
+                <input name = 'username' placeholder = 'Логин'><br><br>
+                <input name = 'password' placeholder = 'Пароль'><br><br>
+                <button type = 'submit'>Войти</button>
+            </form>
+            <a href = '/register'>Зарегистрироваться</a>
         </div>
-    {% endif %}
-    <form method = 'POST' action = '/login'>
-        <input name = 'username' placeholder = 'Логин'><br><br>
-        <input name = 'password' placeholder = 'Пароль'><br><br>
-        <button type = 'submit'>Войти</button>
-    </form>
-    <a href = '/register'>Зарегистрироваться</a>
+
+        <img class = 'neprav_triangle' src = '/img/neprav_triangle.png'>
+    </div>
+
+
+
+    <br><br>
+    <h2>Зарегистрировавшись, Вы получите доступ к:</h2>
+    <img class = 'reklama' src = '/img/reklama2.png'>
+    <p class = 'email'>Написать мне: varsklyarova1580@yandex.ru</p>
 </body>
 </html>
